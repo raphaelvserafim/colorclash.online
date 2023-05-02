@@ -1,0 +1,15 @@
+.stopwatch {
+    text-align: center;
+    border: solid 1px #fff;
+    border-radius: 50%;
+    width: 78px;
+    height: 79px;
+    padding-top: 17px;
+    color: #8b8b8b;
+}
+
+.inGameRoomName {
+    color: #bcb4b4;
+    font-size: 18px !important;
+    font-weight: 900;
+}

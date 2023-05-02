@@ -9,7 +9,7 @@ import Container from '@mui/material/Container';
 export default function ButtonAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" elevation={0} sx={{ background: 'transparent' }}>
+      <AppBar position="static" elevation={1} sx={{ background: 'transparent' }}>
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <PaymentsIcon htmlColor='#fff' />

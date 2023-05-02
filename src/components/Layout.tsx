@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
+import "../css/style.css"
 
 import { lightTheme } from '../Theme';
 import Header from './Header';
