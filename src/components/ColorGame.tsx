@@ -38,7 +38,7 @@ export default function ColorGame() {
 
     React.useEffect(() => {
         if (time <= 0) {
-            setTime('...');
+            setTime('0');
             setTimeout(() => {
                 setTime(10);
             }, 4000)
