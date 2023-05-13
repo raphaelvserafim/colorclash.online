@@ -9,7 +9,18 @@
 }
 
 .inGameRoomName {
-    color: #bcb4b4;
+    color: #f5f1f1;
     font-size: 18px !important;
-    font-weight: 900;
+    font-weight: 900 !important;
+}
+
+.number-game {
+    color: #fff;
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.card-sala {
+    border: solid 1px #f12b4c6e;
+    box-shadow: 0 1px 3px rgb(3 3 3 / 28%);
 }

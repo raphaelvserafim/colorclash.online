@@ -12,7 +12,9 @@ import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Confetti from 'react-dom-confetti';
 import Button from '@mui/material/Button';
-
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import IconButton from '@mui/material/IconButton';
+import LoopIcon from '@mui/icons-material/Loop';
 const config = {
     angle: "350",
     spread: "360",
@@ -29,52 +31,85 @@ const config = {
 
 export default function ColorGame() {
     const [time, setTime] = React.useState(10);
+    const [startGame, setStartGame] = React.useState(1);
+    const [checkingOut, setCheckingOut] = React.useState(0);
+    const [myChoice, setMyChoice] = React.useState(0);
+    const [youWon, setYouWon] = React.useState(false);
 
     React.useEffect(() => {
-        setInterval(() => {
-            setTime((prevTime) => prevTime - 1);
-        }, 1000);
-    }, []);
 
-    React.useEffect(() => {
-        if (time <= 0) {
-            setTime('0');
-            setTimeout(() => {
-                setTime(10);
-            }, 4000)
-
+        if (startGame === 1) {
+            const intervalId = setInterval(() => {
+                setTime((prevTime) => {
+                    if (prevTime === 1) {
+                        setStartGame(0);
+                        setCheckingOut(1);
+                        clearInterval(intervalId);
+                    }
+                    return prevTime - 1;
+                });
+            }, 1000);
         }
-    }, [time]);
+
+    }, [startGame]);
+
+    React.useEffect(() => {
+        if (checkingOut === 1) {
+            setTime(10);
+            setTimeout(() => {
+                setStartGame(1);
+                setCheckingOut(0);
+            }, 4000)
+        }
+
+        const numeroAleatorio = Math.floor(Math.random() * 2) + 1;
+
+        console.log("numeroAleatorio", numeroAleatorio);
+
+        if (myChoice === numeroAleatorio) {
+            console.log("voce ganhou");
+            setYouWon(true)
+        }
+
+    }, [checkingOut]);
+
+
+    const choosingNumber = (number: number) => {
+        console.log("number", number);
+        setMyChoice(number)
+    }
 
     return (
-        <Paper sx={{ padding: 1 }}>
-            <Grid container>
+        <Paper sx={{ padding: 1 }} className='card-sala'>
+            <IconButton color="primary" aria-label="go back" component="label">
+                <ArrowBackIosIcon />
+            </IconButton>
+
+            <Grid container >
                 <Grid md={12} xs={12} mb={2} style={{ textAlign: 'center' }}>
                     <Typography component="span" className='inGameRoomName'>SALA 233</Typography>
                 </Grid>
-                {/* <Grid md={12} xs={12} mb={2} style={{ textAlign: 'center' }}>
-                    <AvatarGroup >
-                        <Avatar sx={{ width: 20, height: 20 }} alt="Karol" src="/static/images/avatar/1.jpg" />
-                        <Avatar sx={{ width: 20, height: 20 }} alt="Raphael" src="/static/images/avatar/2.jpg" />
-                        <Avatar sx={{ width: 20, height: 20 }} alt="Jao" src="/static/images/avatar/3.jpg" />
-                    </AvatarGroup>
-                </Grid> */}
-
                 <Grid md={12} mb={2} container justifyContent="space-between">
                     <Grid item md={6} style={{ textAlign: 'center' }}>
-                        <Button>
-                            <Paper sx={{ backgroundColor: 'black', width: 70, height: 70 }} />
+                        <Button onClick={() => { choosingNumber(2) }}>
+                            <Paper sx={{ backgroundColor: 'black', width: 70, height: 70 }} >
+                                <span className='number-game'>2</span>
+                            </Paper>
                         </Button>
                     </Grid>
                     <Grid item md={4} style={{ textAlign: 'center' }}>
                         <Typography variant="h4" component="div" className='stopwatch'>
-                            {time}
-                            <Confetti active={time === 0} config={config} />
+                            {checkingOut ? <LoopIcon /> : time}
+                            <Confetti
+                                active={youWon}
+                                config={config} />
                         </Typography>
                     </Grid>
                     <Grid item md={6} style={{ textAlign: 'center' }}>
-                        <Button>
-                            <Paper sx={{ backgroundColor: 'red', width: 70, height: 70 }} />
+                        <Button onClick={() => { choosingNumber(1) }}>
+                            <Paper sx={{ backgroundColor: 'red', width: 70, height: 70 }} >
+                                <span className='number-game'>1</span>
+                            </Paper>
                         </Button>
                     </Grid>
                 </Grid>
@@ -89,7 +124,7 @@ export default function ColorGame() {
                                 primaryTypographyProps={{ variant: 'subtitle1' }}
                                 primary="Raphael"
                                 secondaryTypographyProps={{ variant: 'caption' }}
-                                secondary="escolheu"
+                                secondary={`esoclheu ${myChoice}`}
                             />
                         </ListItem>
 
